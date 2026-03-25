@@ -52,6 +52,8 @@
     if (introDismissed) return;
     introDismissed = true;
 
+    document.dispatchEvent(new CustomEvent("intro:dismissed"));
+
     intro.classList.add("fade-out");
     siteRoot.classList.remove("site-hidden");
     siteRoot.classList.add("site-visible");

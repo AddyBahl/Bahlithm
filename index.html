@@ -53,8 +53,11 @@
       aria-labelledby="typing"
       aria-describedby="enter-hint"
     >
-      <h1 id="typing" class="typing-line"></h1>
-      <p id="enter-hint" class="enter-hint">Press Enter or click to begin</p>
+      <canvas id="intro-particles" aria-hidden="true"></canvas>
+      <div class="intro-content">
+        <h1 id="typing" class="typing-line"></h1>
+        <p id="enter-hint" class="enter-hint">Press Enter or click to begin</p>
+      </div>
     </div>
 
     <script src="js/background.js" defer></script>
