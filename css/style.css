@@ -26,6 +26,10 @@ body {
   line-height: 1.6;
 }
 
+body.intro-open {
+  overflow: hidden;
+}
+
 #space-bg {
   position: fixed;
   inset: 0;
@@ -36,11 +40,110 @@ body {
   display: block;
 }
 
+#site-root {
+  position: relative;
+  z-index: 1;
+}
+
+#site-root.site-hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+#site-root.site-visible {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0.85s ease 0.12s;
+}
+
+#intro {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  background: #030508;
+  color: #e8eef8;
+  font-family: ui-monospace, "Cascadia Code", "Consolas", monospace;
+  cursor: crosshair;
+  transition: opacity 0.85s ease;
+}
+
+#intro.fade-out {
+  opacity: 0;
+  pointer-events: none;
+}
+
+#typing {
+  margin: 0;
+  font-size: clamp(1.35rem, 4vw, 2.35rem);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  min-height: 1.4em;
+  text-align: center;
+}
+
+.typing-line::after {
+  content: "|";
+  margin-left: 0.12em;
+  animation: cursor-blink 1s step-end infinite;
+  color: #5eead4;
+}
+
+@keyframes cursor-blink {
+  0%,
+  50% {
+    opacity: 1;
+  }
+  51%,
+  100% {
+    opacity: 0;
+  }
+}
+
+.enter-hint {
+  margin: 1.75rem 0 0;
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  color: color-mix(in srgb, #e8eef8 55%, transparent);
+  opacity: 0;
+  transition: opacity 0.9s ease;
+  text-align: center;
+}
+
+.enter-hint.is-visible {
+  opacity: 1;
+}
+
+.cursor-trail {
+  position: fixed;
+  width: 12px;
+  height: 12px;
+  margin-left: -6px;
+  margin-top: -6px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 60;
+  background: radial-gradient(
+    circle,
+    rgba(94, 234, 212, 0.95) 0%,
+    rgba(37, 99, 235, 0.35) 55%,
+    transparent 70%
+  );
+  box-shadow: 0 0 14px rgba(94, 234, 212, 0.45);
+  opacity: 0.85;
+  transition: opacity 0.28s ease, transform 0.28s ease;
+}
+
 header,
 main,
 footer {
   position: relative;
-  z-index: 1;
 }
 
 header {
@@ -89,10 +192,15 @@ section {
 #hero h1,
 #hero > p {
   opacity: 0;
+  animation: none;
+}
+
+body.main-ready #hero h1,
+body.main-ready #hero > p {
   animation: hero-in 1s ease forwards;
 }
 
-#hero > p {
+body.main-ready #hero > p {
   animation-delay: 0.2s;
 }
 
@@ -110,12 +218,17 @@ section {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  #hero h1,
-  #hero > p {
+  body.main-ready #hero h1,
+  body.main-ready #hero > p {
     animation: none;
     opacity: 1;
     transform: none;
     filter: none;
+  }
+
+  .typing-line::after {
+    animation: none;
+    opacity: 1;
   }
 }
 
